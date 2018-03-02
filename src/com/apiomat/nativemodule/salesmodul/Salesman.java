@@ -26,6 +26,7 @@ package com.apiomat.nativemodule.salesmodul;
 
 
 import com.apiomat.nativemodule.basics.*;
+import com.apiomat.nativemodule.salesmodul.*;
 /**
 * Generated class for your Salesman data model
 *
@@ -53,6 +54,7 @@ public class Salesman extends com.apiomat.nativemodule.AbstractClientDataModel i
     public static final String MODEL_NAME = "Salesman";
 
     /** class specific attributes */
+    private java.util.List<com.apiomat.nativemodule.salesmodul.Lead> listOfLeads = new java.util.ArrayList<com.apiomat.nativemodule.salesmodul.Lead>();
     /**
      * Protected constructor; to create a new instance, use the createObject() method
      */
@@ -75,6 +77,36 @@ public class Salesman extends com.apiomat.nativemodule.AbstractClientDataModel i
     public String getModelName( )
     {
         return MODEL_NAME;
+    }
+
+    public java.util.List<com.apiomat.nativemodule.salesmodul.Lead> getListOfLeads() 
+    {
+        if(this.listOfLeads == null || this.listOfLeads.size() == 0)
+        {
+            /* do this by reflection to be backward compatible */
+            try
+            {
+                java.lang.reflect.Method m = com.apiomat.nativemodule.AbstractClientDataModel.class.getMethod( "loadReferences", String.class,  Class.class );
+                this.listOfLeads =  ( java.util.List<com.apiomat.nativemodule.salesmodul.Lead> ) m.invoke( this, "listOfLeads", com.apiomat.nativemodule.salesmodul.Lead.class );
+            }
+            catch ( java.lang.NoSuchMethodException | java.lang.SecurityException | java.lang.IllegalAccessException | java.lang.IllegalArgumentException | java.lang.reflect.InvocationTargetException e )
+            {
+                //silently ignored
+            }
+        }   
+        return this.listOfLeads;
+    }
+
+    public void postListOfLeads( final com.apiomat.nativemodule.salesmodul.Lead refData )
+    {
+        addReference( "listOfLeads", refData );
+        this.listOfLeads.add( refData );
+    }
+
+    public void removeListOfLeads( final com.apiomat.nativemodule.salesmodul.Lead refData )
+    {
+        removeReference( "listOfLeads", refData );
+        this.listOfLeads.remove( refData );
     }
 
 }

@@ -26,6 +26,7 @@ package com.apiomat.nativemodule.salesmodul;
 
 
 import com.apiomat.nativemodule.basics.*;
+import com.apiomat.nativemodule.salesmodul.*;
 /**
 * Generated class for your Lead data model
 *
@@ -53,12 +54,15 @@ public class Lead extends com.apiomat.nativemodule.AbstractClientDataModel imple
     public static final String MODEL_NAME = "Lead";
 
     /** class specific attributes */
+    private java.util.List<com.apiomat.nativemodule.salesmodul.ContactProtocol> contactAttempts = new java.util.ArrayList<com.apiomat.nativemodule.salesmodul.ContactProtocol>();
+    private String email = null;
     private String firstName = null;
     private String lastName = null;
     private java.util.Date lastVisit = null;
     @com.apiomat.nativemodule.StaticData( type = com.apiomat.nativemodule.StaticData.Type.Image )
     private String profilePicURL;
     private double[] regPlace;
+    private Long score = null;
     /**
      * Protected constructor; to create a new instance, use the createObject() method
      */
@@ -81,6 +85,46 @@ public class Lead extends com.apiomat.nativemodule.AbstractClientDataModel imple
     public String getModelName( )
     {
         return MODEL_NAME;
+    }
+
+    public java.util.List<com.apiomat.nativemodule.salesmodul.ContactProtocol> getContactAttempts() 
+    {
+        if(this.contactAttempts == null || this.contactAttempts.size() == 0)
+        {
+            /* do this by reflection to be backward compatible */
+            try
+            {
+                java.lang.reflect.Method m = com.apiomat.nativemodule.AbstractClientDataModel.class.getMethod( "loadReferences", String.class,  Class.class );
+                this.contactAttempts =  ( java.util.List<com.apiomat.nativemodule.salesmodul.ContactProtocol> ) m.invoke( this, "contactAttempts", com.apiomat.nativemodule.salesmodul.ContactProtocol.class );
+            }
+            catch ( java.lang.NoSuchMethodException | java.lang.SecurityException | java.lang.IllegalAccessException | java.lang.IllegalArgumentException | java.lang.reflect.InvocationTargetException e )
+            {
+                //silently ignored
+            }
+        }   
+        return this.contactAttempts;
+    }
+
+    public void postContactAttempts( final com.apiomat.nativemodule.salesmodul.ContactProtocol refData )
+    {
+        addReference( "contactAttempts", refData );
+        this.contactAttempts.add( refData );
+    }
+
+    public void removeContactAttempts( final com.apiomat.nativemodule.salesmodul.ContactProtocol refData )
+    {
+        removeReference( "contactAttempts", refData );
+        this.contactAttempts.remove( refData );
+    }
+
+    public String getEmail()
+    {
+         return this.email;
+    }
+
+    public void setEmail( String arg )
+    {
+        this.email = arg;
     }
 
     public String getFirstName()
@@ -234,6 +278,16 @@ public class Lead extends com.apiomat.nativemodule.AbstractClientDataModel imple
         {
             this.regPlace[1] = longitude;
         }
+    }
+
+    public Long getScore()
+    {
+         return this.score;
+    }
+
+    public void setScore( Long arg )
+    {
+        this.score = arg;
     }
 
 }
