@@ -53,7 +53,7 @@ public class LeadHooksNonTransient<T extends com.apiomat.nativemodule.salesmodul
 	@Override
     public void beforePost( com.apiomat.nativemodule.salesmodul.Lead obj, com.apiomat.nativemodule.Request r )
     {
-		obj.getLastVisit().setTime(LocalDateTime.now().getSecond());
+		obj.setLastVisit(new Date());
     }
 
     @Override
