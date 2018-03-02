@@ -55,6 +55,10 @@ public class Lead extends com.apiomat.nativemodule.AbstractClientDataModel imple
     /** class specific attributes */
     private String firstName = null;
     private String lastName = null;
+    private java.util.Date lastVisit = null;
+    @com.apiomat.nativemodule.StaticData( type = com.apiomat.nativemodule.StaticData.Type.Image )
+    private String profilePicURL;
+    private double[] regPlace;
     /**
      * Protected constructor; to create a new instance, use the createObject() method
      */
@@ -97,6 +101,139 @@ public class Lead extends com.apiomat.nativemodule.AbstractClientDataModel imple
     public void setLastName( String arg )
     {
         this.lastName = arg;
+    }
+
+    public java.util.Date getLastVisit()
+    {
+         return this.lastVisit;
+    }
+
+    public void setLastVisit( java.util.Date arg )
+    {
+        this.lastVisit = arg;
+    }
+
+    public String getProfilePicURL( )
+    {
+        return this.profilePicURL;
+    }
+
+    public byte[] loadProfilePic( )
+    {
+        final String resUrl = getProfilePicURL();
+        return getData( com.apiomat.nativemodule.IResourceMethods.ResourceType.IMAGE, resUrl);
+    }
+
+    public java.io.InputStream loadProfilePicAsStream( )
+    {
+        final String resUrl = getProfilePicURL();
+        return getDataAsStream( com.apiomat.nativemodule.IResourceMethods.ResourceType.IMAGE, resUrl);
+    }
+
+    public String getProfilePicURL( String apiKey, String system, int width, int height, 
+        String backgroundColorAsHex, Double alpha, String format )
+    {
+        final java.lang.StringBuilder additionalParameters = new java.lang.StringBuilder();
+        additionalParameters.append( ".img?apiKey=" );
+        additionalParameters.append( apiKey );
+        additionalParameters.append( "&system=" );
+        additionalParameters.append( system );
+        additionalParameters.append( "&width=" );
+        additionalParameters.append( width );
+        additionalParameters.append( "&height=" );
+        additionalParameters.append( height );
+        
+        if(backgroundColorAsHex != null) 
+        {
+            additionalParameters.append( "&bgcolor=" );
+            additionalParameters.append( backgroundColorAsHex );
+        }
+        if(alpha != null)
+        {
+            additionalParameters.append( "&alpha=" );
+            additionalParameters.append( alpha );
+        }
+        if(format != null)
+        {
+            additionalParameters.append( "&format=" );
+            additionalParameters.append( format );
+        }
+        return getProfilePicURL( ) + additionalParameters;
+    }
+
+    public byte[] loadProfilePic( String apiKey, String system, int width, int height, 
+        String backgroundColorAsHex, Double alpha, String format )
+    {
+        final String resUrl = getProfilePicURL( apiKey, system, width, height, 
+            backgroundColorAsHex, alpha, format );
+        return loadResource(resUrl);
+    }
+
+    public void setProfilePicURL( String url ) 
+    {
+        this.profilePicURL = url;
+    }
+
+    /**
+     * @deprecated Use {@link #postProfilePic( java.io.InputStream data , String fileName, String format )}
+     */
+    @Deprecated
+    public String postProfilePic( byte[] data , String fileName, String format )
+    {
+        String url = saveResource( data, true, fileName, format );
+        setProfilePicURL( url );
+        return url;
+    }
+
+    public String postProfilePic( java.io.InputStream data , String fileName, String format )
+    {
+        String url = saveResource( data, true, fileName, format );
+        setProfilePicURL( url );
+        return url;
+    }
+
+    public double getRegPlaceLatitude( )
+    {
+         return this.regPlace !=null && this.regPlace.length > 0 ? this.regPlace[0] : 0;
+    }
+
+    public double getRegPlaceLongitude( )
+    {
+         return this.regPlace !=null && this.regPlace.length > 1 ? this.regPlace[1] : 0;
+    }
+
+    public void setRegPlaceLatitude( double latitude )
+    {
+        if( this.regPlace == null )
+        {
+            this.regPlace = new double[]{};
+        }
+
+        if ( this.regPlace.length < 2 )
+        {
+            this.regPlace = new double[]{ latitude, 0 };
+        }
+        else
+        {
+            this.regPlace[0] = latitude;
+        }
+    }
+
+    public void setRegPlaceLongitude( double longitude )
+    {
+        if( this.regPlace == null )
+        {
+            this.regPlace = new double[]{};
+        }
+
+        if ( this.regPlace.length < 2 )
+        {
+            this.regPlace = new double[]{ 0, longitude };
+        }
+        else
+        {
+            this.regPlace[1] = longitude;
+        }
     }
 
 }
