@@ -23,6 +23,10 @@
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 package com.apiomat.nativemodule.salesmodul;
+import java.time.LocalDateTime;
+import java.util.Date;
+import java.util.List;
+
 import com.apiomat.nativemodule.*;
 import com.apiomat.nativemodule.basics.User;
 
@@ -46,9 +50,10 @@ public class LeadHooksNonTransient<T extends com.apiomat.nativemodule.salesmodul
      * Following Methods can be used if your data model is NOT set to TRANSIENT
      */
 
-    @Override
+	@Override
     public void beforePost( com.apiomat.nativemodule.salesmodul.Lead obj, com.apiomat.nativemodule.Request r )
     {
+		obj.getLastVisit().setTime(LocalDateTime.now().getSecond());
     }
 
     @Override
@@ -66,6 +71,16 @@ public class LeadHooksNonTransient<T extends com.apiomat.nativemodule.salesmodul
     @Override
     public void afterPost( com.apiomat.nativemodule.salesmodul.Lead obj, com.apiomat.nativemodule.Request r )
     {
+    	IModel<?>[] models;
+    	models = SalesModul.AOM.findByNames( r.getApplicationName(), Salesman.MODULE_NAME, Salesman.MODEL_NAME, "userName == \""+r.getUserEmail()+"\"", r );
+    	if(models != null && models.length > 0)
+    	{
+    		com.apiomat.nativemodule.salesmodul.Salesman salesman = (Salesman) models[0];
+    		salesman.postListOfLeads(obj);
+    	}
+    	
+    	//schöner: List<Salesman> foundSalesman = this.model.findByNames(Salesman.class, String.format("userName == \"%s\"", r.getUserEmail()), r);
+    		
     }
 
     @Override
