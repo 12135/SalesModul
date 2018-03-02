@@ -28,7 +28,7 @@ package com.apiomat.nativemodule.salesmodul;
 import com.apiomat.nativemodule.basics.*;
 import com.apiomat.nativemodule.salesmodul.*;
 /**
-* Generated class for your Salesman data model
+* Generated default class representing a user in your app
 *
 * DO NOT CHANGE ANY CODE EXCEPT CLASS ANNOTATIONS OR CLASS ATTRIBUTES HERE!
 * EVERYTHING ELSE WILL GET OVERWRITTEN!
@@ -38,11 +38,11 @@ import com.apiomat.nativemodule.salesmodul.*;
 @com.apiomat.nativemodule.Model( moduleName = "SalesModul",
     hooksClassNameTransient = "com.apiomat.nativemodule.salesmodul.SalesmanHooksTransient", 
     hooksClassNameNonTransient = "com.apiomat.nativemodule.salesmodul.SalesmanHooksNonTransient", 
-            isTransient = false,     requiredUserRoleCreate=com.apiomat.nativemodule.UserRole.User, requiredUserRoleRead=com.apiomat.nativemodule.UserRole.User,
+            isTransient = false,     requiredUserRoleCreate=com.apiomat.nativemodule.UserRole.Guest, requiredUserRoleRead=com.apiomat.nativemodule.UserRole.User,
     requiredUserRoleWrite=com.apiomat.nativemodule.UserRole.Owner, restrictResourceAccess=false,
     allowedRolesCreate={}, allowedRolesRead={},
     allowedRolesWrite={}, allowedRolesGrant={})
-public class Salesman extends com.apiomat.nativemodule.AbstractClientDataModel implements com.apiomat.nativemodule.IModel<com.apiomat.nativemodule.salesmodul.Salesman>
+public class Salesman extends com.apiomat.nativemodule.basics.User
 {
     /**
      * Contains the name of the module that this model belongs to
@@ -55,6 +55,7 @@ public class Salesman extends com.apiomat.nativemodule.AbstractClientDataModel i
 
     /** class specific attributes */
     private java.util.List<com.apiomat.nativemodule.salesmodul.Lead> listOfLeads = new java.util.ArrayList<com.apiomat.nativemodule.salesmodul.Lead>();
+    private double[] salesArea;
     /**
      * Protected constructor; to create a new instance, use the createObject() method
      */
@@ -107,6 +108,50 @@ public class Salesman extends com.apiomat.nativemodule.AbstractClientDataModel i
     {
         removeReference( "listOfLeads", refData );
         this.listOfLeads.remove( refData );
+    }
+
+    public double getSalesAreaLatitude( )
+    {
+         return this.salesArea !=null && this.salesArea.length > 0 ? this.salesArea[0] : 0;
+    }
+
+    public double getSalesAreaLongitude( )
+    {
+         return this.salesArea !=null && this.salesArea.length > 1 ? this.salesArea[1] : 0;
+    }
+
+    public void setSalesAreaLatitude( double latitude )
+    {
+        if( this.salesArea == null )
+        {
+            this.salesArea = new double[]{};
+        }
+
+        if ( this.salesArea.length < 2 )
+        {
+            this.salesArea = new double[]{ latitude, 0 };
+        }
+        else
+        {
+            this.salesArea[0] = latitude;
+        }
+    }
+
+    public void setSalesAreaLongitude( double longitude )
+    {
+        if( this.salesArea == null )
+        {
+            this.salesArea = new double[]{};
+        }
+
+        if ( this.salesArea.length < 2 )
+        {
+            this.salesArea = new double[]{ 0, longitude };
+        }
+        else
+        {
+            this.salesArea[1] = longitude;
+        }
     }
 
 }
