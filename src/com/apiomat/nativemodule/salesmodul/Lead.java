@@ -53,6 +53,8 @@ public class Lead extends com.apiomat.nativemodule.AbstractClientDataModel imple
     public static final String MODEL_NAME = "Lead";
 
     /** class specific attributes */
+    private String firstName = null;
+    private String lastName = null;
     /**
      * Protected constructor; to create a new instance, use the createObject() method
      */
@@ -75,6 +77,26 @@ public class Lead extends com.apiomat.nativemodule.AbstractClientDataModel imple
     public String getModelName( )
     {
         return MODEL_NAME;
+    }
+
+    public String getFirstName()
+    {
+         return this.firstName;
+    }
+
+    public void setFirstName( String arg )
+    {
+        this.firstName = arg;
+    }
+
+    public String getLastName()
+    {
+         return this.lastName;
+    }
+
+    public void setLastName( String arg )
+    {
+        this.lastName = arg;
     }
 
 }

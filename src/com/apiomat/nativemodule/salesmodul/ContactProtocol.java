@@ -54,6 +54,7 @@ public class ContactProtocol extends com.apiomat.nativemodule.AbstractClientData
 
     /** class specific attributes */
     private String notes = null;
+    private java.util.Date timeOfContact = null;
     /**
      * Protected constructor; to create a new instance, use the createObject() method
      */
@@ -86,6 +87,16 @@ public class ContactProtocol extends com.apiomat.nativemodule.AbstractClientData
     public void setNotes( String arg )
     {
         this.notes = arg;
+    }
+
+    public java.util.Date getTimeOfContact()
+    {
+         return this.timeOfContact;
+    }
+
+    public void setTimeOfContact( java.util.Date arg )
+    {
+        this.timeOfContact = arg;
     }
 
 }
