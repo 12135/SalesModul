@@ -54,6 +54,7 @@ public class LeadHooksNonTransient<T extends com.apiomat.nativemodule.salesmodul
     public void beforePost( com.apiomat.nativemodule.salesmodul.Lead obj, com.apiomat.nativemodule.Request r )
     {
 		obj.setLastVisit(new Date());
+    	obj.setScore(100L);
     }
 
     @Override
@@ -79,15 +80,11 @@ public class LeadHooksNonTransient<T extends com.apiomat.nativemodule.salesmodul
     		com.apiomat.nativemodule.salesmodul.Salesman salesman = (Salesman) models[0];
     		salesman.postListOfLeads(obj);
     	}
-    	
-    	obj.setScore((long) 100);
+    
     	obj.log("a new lead was created1");
-    	this.model.log("a new lead was created");;
-//    	if (user versucht score zu verändern)
-//    	{
-//    		obj.logError("score modification not allowed2");
-//    	}
-//    	
+    	this.model.log("a new lead was created");
+
+    	
     		
     }
 
@@ -125,6 +122,10 @@ public class LeadHooksNonTransient<T extends com.apiomat.nativemodule.salesmodul
     @Override
     public boolean beforePut( com.apiomat.nativemodule.salesmodul.Lead objFromDB, com.apiomat.nativemodule.salesmodul.Lead obj, com.apiomat.nativemodule.Request r )
     {
+    	if (null != obj.getScore() && obj.getScore() != objFromDB.getScore())
+    	{
+    		obj.throwException("score modification not allowed");
+    	}
         return false;
     }
 
