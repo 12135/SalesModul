@@ -24,6 +24,7 @@
  */
 package com.apiomat.nativemodule.salesmodul;
 
+import com.apiomat.nativemodule.NativeModuleConfig.Type;
 
 /**
  * Generated class for starting and stopping your module. 
@@ -55,6 +56,15 @@ public class SalesModul implements com.apiomat.nativemodule.IModule
     // Read @NativeModuleConfig values using the following code:
     // SalesModul.APP_CONFIG_PROXY.getConfigValue( SalesModul.HOSTNAME, appName, system );
 
+  @com.apiomat.nativemodule.NativeModuleConfig(
+         datatype = Type.NUMBER,
+         example = "100",
+         title = "default score",
+         info = "default value for scores",
+         defaultValue = "100",
+         notifyAllNodes = true,
+         order = 1 )
+     public static String DEFAULTSCORE = "SalesModul_defaultscore";
     /**
      * This method gets called once in the cluster when the module is uploaded.
      */
