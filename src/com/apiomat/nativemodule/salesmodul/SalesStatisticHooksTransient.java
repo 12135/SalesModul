@@ -100,7 +100,7 @@ public class SalesStatisticHooksTransient<T extends com.apiomat.nativemodule.sal
     {
     	List<Lead> models = this.model.findByNames(Lead.class, "", r);
      	Long totalScore = 0L;
-    	 for (int i = 0; i <= models.size(); i++)
+    	 for (int i = 0; i < models.size(); i++)
     	 { 
     		 totalScore += (models.get(i).getScore() != null)?models.get(i).getScore():0L; //ternaerer Operator
     	 }
