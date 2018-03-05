@@ -54,8 +54,8 @@ public class LeadHooksNonTransient<T extends com.apiomat.nativemodule.salesmodul
     public void beforePost( com.apiomat.nativemodule.salesmodul.Lead obj, com.apiomat.nativemodule.Request r )
     {
 		obj.setLastVisit(new Date());
-    	obj.setScore(100L);
-    	SalesModul.APP_CONFIG_PROXY.getConfigValue( SalesModul.DEFAULTSCORE, r.getApplicationName(), r.getSystem() );
+    	String defaultScore = (String) SalesModul.APP_CONFIG_PROXY.getConfigValue( SalesModul.DEFAULTSCORE, r.getApplicationName(), r.getSystem() );
+    	obj.setScore(Long.valueOf(defaultScore));
     }
 
     @Override
