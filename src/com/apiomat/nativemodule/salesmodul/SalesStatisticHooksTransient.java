@@ -23,6 +23,9 @@
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 package com.apiomat.nativemodule.salesmodul;
+import java.util.ArrayList;
+import java.util.List;
+
 import com.apiomat.nativemodule.*;
 import com.apiomat.nativemodule.basics.User;
 
@@ -40,7 +43,6 @@ public class SalesStatisticHooksTransient<T extends com.apiomat.nativemodule.sal
     {
         this.model = model;
     }
-
 
     /*
      * do-Methods can be used if your data model is set to TRANSIENT
@@ -96,7 +98,17 @@ public class SalesStatisticHooksTransient<T extends com.apiomat.nativemodule.sal
     @Override
     public java.util.List<com.apiomat.nativemodule.salesmodul.SalesStatistic> doGetAll( String query, com.apiomat.nativemodule.Request r )
     {
-        return null;
+    	List<Lead> models = this.model.findByNames(Lead.class, "", r);
+     	Long totalScore = 0L;
+    	 for (int i = 0; i <= models.size();)
+    	 {
+    		 totalScore += models.get(i).getScore();
+    	 }
+    	List<com.apiomat.nativemodule.salesmodul.SalesStatistic> list = new ArrayList<com.apiomat.nativemodule.salesmodul.SalesStatistic>();
+    	com.apiomat.nativemodule.salesmodul.SalesStatistic stat = this.model.createObject(SalesStatistic.class, r);
+    	stat.setTotalScore(totalScore);
+    	list.add(stat);
+        return list;
     }
 
     @Override
