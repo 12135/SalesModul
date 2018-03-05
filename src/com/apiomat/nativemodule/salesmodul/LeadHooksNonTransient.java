@@ -73,13 +73,21 @@ public class LeadHooksNonTransient<T extends com.apiomat.nativemodule.salesmodul
     {
     	IModel<?>[] models;
     	models = SalesModul.AOM.findByNames( r.getApplicationName(), Salesman.MODULE_NAME, Salesman.MODEL_NAME, "userName == \""+r.getUserEmail()+"\"", r );
+    	//schöner: List<Salesman> foundSalesman = this.model.findByNames(Salesman.class, String.format("userName == \"%s\"", r.getUserEmail()), r);
     	if(models != null && models.length > 0)
     	{
     		com.apiomat.nativemodule.salesmodul.Salesman salesman = (Salesman) models[0];
     		salesman.postListOfLeads(obj);
     	}
     	
-    	//schöner: List<Salesman> foundSalesman = this.model.findByNames(Salesman.class, String.format("userName == \"%s\"", r.getUserEmail()), r);
+    	obj.setScore((long) 100);
+    	obj.log("a new lead was created1");
+    	this.model.log("a new lead was created");;
+//    	if (user versucht score zu verändern)
+//    	{
+//    		obj.logError("score modification not allowed2");
+//    	}
+//    	
     		
     }
 
