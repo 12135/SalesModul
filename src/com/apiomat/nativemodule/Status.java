@@ -224,6 +224,7 @@ public enum Status
     SSL_ERROR( 623, "An error occurred during establishing a secure connection" ),
     MAX_FILE_SIZE_OFFLINE_EXCEEDED( 624, "The max file size for offline saving is exceeded" ),
     SQL_CONSTRAINT( 625, "An error occurred because of an SQL constraint (for example unique ForeignID" ),
+    UNEXPECTED_STATUS_CODE( 626, "The returned status code was not expected." ),
     MALICIOUS_MEMBER( 950, "Malicious use of member detected!" ),
     NULL(9999, ""); //placeholder
 
