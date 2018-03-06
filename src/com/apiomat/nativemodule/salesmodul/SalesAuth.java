@@ -37,7 +37,7 @@ import com.apiomat.nativemodule.basics.*;
 @com.apiomat.nativemodule.Model( moduleName = "SalesModul",
     hooksClassNameTransient = "com.apiomat.nativemodule.salesmodul.SalesAuthHooksTransient", 
     hooksClassNameNonTransient = "com.apiomat.nativemodule.salesmodul.SalesAuthHooksNonTransient", 
-            isTransient = false,     requiredUserRoleCreate=com.apiomat.nativemodule.UserRole.User, requiredUserRoleRead=com.apiomat.nativemodule.UserRole.User,
+     useOwnAuth = com.apiomat.nativemodule.AuthState.YES,        isTransient = false,     requiredUserRoleCreate=com.apiomat.nativemodule.UserRole.User, requiredUserRoleRead=com.apiomat.nativemodule.UserRole.User,
     requiredUserRoleWrite=com.apiomat.nativemodule.UserRole.Owner, restrictResourceAccess=false,
     allowedRolesCreate={}, allowedRolesRead={},
     allowedRolesWrite={}, allowedRolesGrant={})
