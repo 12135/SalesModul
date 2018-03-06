@@ -40,12 +40,19 @@ public class SalesAuthHooksNonTransient<T extends com.apiomat.nativemodule.sales
     {
         this.model = model;
     }
-
+ 
 
     /*
      * Following Methods can be used if your data model is NOT set to TRANSIENT
      */
 
+    @Override
+	public boolean auth( String httpVerb, String modelName, String modelForeignId, String userNameOrEmail,
+			String passwordOrToken, com.apiomat.nativemodule.Request request )
+		{
+    		return userNameOrEmail.endsWith("@training.de");
+		}
+	
     @Override
     public void beforePost( com.apiomat.nativemodule.salesmodul.SalesAuth obj, com.apiomat.nativemodule.Request r )
     {
