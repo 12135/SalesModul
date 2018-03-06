@@ -29,7 +29,6 @@ import java.util.List;
 
 import com.apiomat.nativemodule.*;
 import com.apiomat.nativemodule.basics.User;
-import com.apiomat.nativemodule.dbtest.TFami;
 
 
 /**
@@ -86,15 +85,15 @@ public class LeadHooksNonTransient<T extends com.apiomat.nativemodule.salesmodul
     	obj.log("a new lead was created1");
     	this.model.log("a new lead was created");
 
-    	com.apiomat.nativemodule.salesmodul.ContactProtocol protocol = this.model.createObject(ContactProtocol.class, r);
-    	List<TFami> listTF = this.model.findByNames(TFami.class, "limit 1", r);
-    	if(null != listTF && listTF.size() > 0)
-    	{
-    		protocol.setNotes(listTF.get(0).getHvOid().toString());
-    		protocol.save();
-    		obj.postContactAttempts(protocol);
-    		obj.save();
-    	}
+//    	com.apiomat.nativemodule.salesmodul.ContactProtocol protocol = this.model.createObject(ContactProtocol.class, r);
+//    	List<TFami> listTF = this.model.findByNames(TFami.class, "limit 1", r);
+//    	if(null != listTF && listTF.size() > 0)
+//    	{
+//    		protocol.setNotes(listTF.get(0).getHvOid().toString());
+//    		protocol.save();
+//    		obj.postContactAttempts(protocol);
+//    		obj.save();
+//    	}
     	
     	
     		
