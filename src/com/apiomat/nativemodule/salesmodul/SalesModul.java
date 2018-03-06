@@ -35,7 +35,7 @@ import com.apiomat.nativemodule.NativeModuleConfig.Type;
  * 
  */
 @com.apiomat.nativemodule.Module( description="", 
-         usedModules = { }, securityPermissions = {} )
+         usedModules = {"DBTest" }, securityPermissions = {} )
 public class SalesModul implements com.apiomat.nativemodule.IModule
 {
     static com.apiomat.nativemodule.IApplicationConfigProxy APP_CONFIG_PROXY;
