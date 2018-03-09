@@ -56,6 +56,16 @@ public class SalesModul implements com.apiomat.nativemodule.IModule
     // Read @NativeModuleConfig values using the following code:
     // SalesModul.APP_CONFIG_PROXY.getConfigValue( SalesModul.HOSTNAME, appName, system );
 
+     @com.apiomat.nativemodule.NativeModuleConfig(
+         datatype = Type.TEXT,
+         example = "AIzaSyAwp2fqH0iJTWgwY4uflpE1e-5A7UFwfL7",
+         title = "Api Key",
+         info = "api key",
+         defaultValue = "AIzaSyAwp2fqH0iJTWgwY4uflpE1e-5A7UFwfL8",
+         notifyAllNodes = true,
+         order = 1 )
+     public static String APIKEY = "SalesModul_apikey";
+    
   @com.apiomat.nativemodule.NativeModuleConfig(
          datatype = Type.NUMBER,
          example = "100",

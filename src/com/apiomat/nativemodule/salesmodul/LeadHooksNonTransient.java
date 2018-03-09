@@ -23,9 +23,16 @@
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 package com.apiomat.nativemodule.salesmodul;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
 
 import com.apiomat.nativemodule.*;
 import com.apiomat.nativemodule.basics.User;
@@ -56,6 +63,7 @@ public class LeadHooksNonTransient<T extends com.apiomat.nativemodule.salesmodul
 		obj.setLastVisit(new Date());
     	String defaultScore = (String) SalesModul.APP_CONFIG_PROXY.getConfigValue( SalesModul.DEFAULTSCORE, r.getApplicationName(), r.getSystem() );
     	obj.setScore(Long.valueOf(defaultScore));
+    	
     }
 
     @Override
@@ -133,6 +141,25 @@ public class LeadHooksNonTransient<T extends com.apiomat.nativemodule.salesmodul
     @Override
     public boolean beforePut( com.apiomat.nativemodule.salesmodul.Lead objFromDB, com.apiomat.nativemodule.salesmodul.Lead obj, com.apiomat.nativemodule.Request r )
     {
+    	String apiKey = (String) SalesModul.APP_CONFIG_PROXY.getConfigValue(SalesModul.APIKEY, r.getApplicationName(), r.getSystem() );
+    	ByteArrayOutputStream baos = new ByteArrayOutputStream();
+    	InputStream is = null;
+    	byte[] byteChunk = new byte[4096];;
+    	try {
+    		URL url = new URL("https://maps.googleapis.com/maps/api/staticmap?center=51.34,12.37&zoom=14&size=400x400&key=" + apiKey);	
+    	  is = url.openStream ();
+    	  int n;
+
+    	  while ( (n = is.read(byteChunk)) > 0 ) {
+    	    baos.write(byteChunk, 0, n);
+    	  }
+    	  obj.postAreaPicture(byteChunk, "area", "png");
+      	obj.save();
+    	}
+    	catch (Exception e) {
+    		  obj.throwException(e.getMessage());
+    		}  
+
     	if (null != obj.getScore() && obj.getScore() != objFromDB.getScore())
     	{
     		obj.throwException("score modification not allowed");
