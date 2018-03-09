@@ -44,7 +44,7 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>com.apiomat.nativemodule</groupId>
+            <groupId>DBTest</groupId>
             <artifactId>DBTest</artifactId>
             <version>1.0.0</version>
             <scope>system</scope>
