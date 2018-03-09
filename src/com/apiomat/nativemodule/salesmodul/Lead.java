@@ -56,6 +56,7 @@ public class Lead extends com.apiomat.nativemodule.AbstractClientDataModel imple
     /** class specific attributes */
     @com.apiomat.nativemodule.StaticData( type = com.apiomat.nativemodule.StaticData.Type.Image )
     private String areaPictureURL;
+    private Double averageAreaGasPrice = null;
     private java.util.List<com.apiomat.nativemodule.salesmodul.ContactProtocol> contactAttempts = new java.util.ArrayList<com.apiomat.nativemodule.salesmodul.ContactProtocol>();
     private String email = null;
     private String firstName = null;
@@ -166,6 +167,16 @@ public class Lead extends com.apiomat.nativemodule.AbstractClientDataModel imple
         String url = saveResource( data, true, fileName, format );
         setAreaPictureURL( url );
         return url;
+    }
+
+    public Double getAverageAreaGasPrice()
+    {
+         return this.averageAreaGasPrice;
+    }
+
+    public void setAverageAreaGasPrice( Double arg )
+    {
+        this.averageAreaGasPrice = arg;
     }
 
     public java.util.List<com.apiomat.nativemodule.salesmodul.ContactProtocol> getContactAttempts() 
