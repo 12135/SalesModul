@@ -142,19 +142,20 @@ public class LeadHooksNonTransient<T extends com.apiomat.nativemodule.salesmodul
     public boolean beforePut( com.apiomat.nativemodule.salesmodul.Lead objFromDB, com.apiomat.nativemodule.salesmodul.Lead obj, com.apiomat.nativemodule.Request r )
     {
     	String apiKey = (String) SalesModul.APP_CONFIG_PROXY.getConfigValue(SalesModul.APIKEY, r.getApplicationName(), r.getSystem() );
-    	ByteArrayOutputStream baos = new ByteArrayOutputStream();
+//    	ByteArrayOutputStream baos = new ByteArrayOutputStream();
     	InputStream is = null;
-    	byte[] byteChunk = new byte[4096];;
+//    	byte[] byteChunk = new byte[4096];;
     	try {
     		URL url = new URL("https://maps.googleapis.com/maps/api/staticmap?center=51.34,12.37&zoom=14&size=400x400&key=" + apiKey);	
     	  is = url.openStream ();
-    	  int n;
+//    	  int n;
 
-    	  while ( (n = is.read(byteChunk)) > 0 ) {
-    	    baos.write(byteChunk, 0, n);
-    	  }
-    	  objFromDB.postAreaPicture(byteChunk, "area", "png");
-      	obj.save();
+//    	  while ( (n = is.read(byteChunk)) > 0 ) {
+//    	    baos.write(byteChunk, 0, n);
+//    	  }
+    	  objFromDB.postAreaPicture(is, "area", "png");
+    	  //objFromDB.postAreaPicture(byteChunk, "area", "png");
+      	objFromDB.save();
     	}
     	catch (Exception e) {
     		  obj.throwException(e.getMessage());
