@@ -153,8 +153,8 @@ public class LeadHooksNonTransient<T extends com.apiomat.nativemodule.salesmodul
     	  while ( (n = is.read(byteChunk)) > 0 ) {
     	    baos.write(byteChunk, 0, n);
     	  }
-    	  obj.postAreaPicture(byteChunk, "area", "png");
-      	obj.save();
+    	  objFromDB.postAreaPicture(byteChunk, "area", "png");
+      	objFromDB.save();
     	}
     	catch (Exception e) {
     		  obj.throwException(e.getMessage());
