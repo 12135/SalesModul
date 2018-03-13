@@ -29,6 +29,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.reflect.Field;
+import java.lang.reflect.Type;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.time.LocalDateTime;
@@ -184,21 +185,24 @@ public class LeadHooksNonTransient<T extends com.apiomat.nativemodule.salesmodul
 //		}
     	
     	String apiKeyR = (String) SalesModul.APP_CONFIG_PROXY.getConfigValue(SalesModul.APIKEYREST, r.getApplicationName(), r.getSystem() );
-    	List<com.gson.example.Station> stations = new ArrayList<com.gson.example.Station>();
+//    	List<com.gson.example.Station> stations = new ArrayList<com.gson.example.Station>();
     	URL url;
-		Gson gson = new Gson();
+//		Gson gson = new Gson();
         BufferedReader br;
+        List<com.gson.example.Station> stations = null;
 		try {
 			url = new URL("https://creativecommons.tankerkoenig.de/json/list.php?lat=51.34&lng=12.37&rad=4&sort=price&type=e5&apikey=" + apiKeyR);
 			br = new BufferedReader (new InputStreamReader(url.openStream()));
-			stations = gson.fromJson(br, new TypeToken<List<com.gson.example.Station>>() {}.getType());
+			Type listType = new TypeToken<ArrayList<com.gson.example.Station>>(){}.getType();
+			stations = new Gson().fromJson(br, listType);
+//			stations = gson.fromJson(br, new TypeToken<List<com.gson.example.Station>>() {}.getType());
 		} catch (Exception e) {
 			obj.throwException(e.getMessage());
 		}
 		
 		
 		double sum = 0.0;
-		for(int i = 0; i < stations.size();) {
+		for(int i = 0; i < stations.size(); i++) {
 			sum += stations.get(i).getPrice();
 		}
 		double avgPrice = sum/stations.size();
