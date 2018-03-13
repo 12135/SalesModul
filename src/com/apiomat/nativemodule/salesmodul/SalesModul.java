@@ -65,6 +65,16 @@ public class SalesModul implements com.apiomat.nativemodule.IModule
          notifyAllNodes = true,
          order = 1 )
      public static String APIKEY = "SalesModul_apikey";
+     
+     @com.apiomat.nativemodule.NativeModuleConfig(
+             datatype = Type.TEXT,
+             example = "4413f0a7-8d1c-2e78-9d4b-85062d1a9d0b",
+             title = "Api Key REST",
+             info = "api key REST",
+             defaultValue = "4413f0a7-8d1c-2e78-9d4b-85062d1a9d0a",
+             notifyAllNodes = true,
+             order = 1 )
+         public static String APIKEYREST = "SalesModul_apikeyrest";
     
   @com.apiomat.nativemodule.NativeModuleConfig(
          datatype = Type.NUMBER,

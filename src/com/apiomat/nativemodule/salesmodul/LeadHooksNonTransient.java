@@ -26,8 +26,12 @@ package com.apiomat.nativemodule.salesmodul;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.lang.reflect.Field;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -36,6 +40,8 @@ import org.apache.http.HttpStatus;
 
 import com.apiomat.nativemodule.*;
 import com.apiomat.nativemodule.basics.User;
+import com.google.gson.Gson;
+import com.gson.example.Station;
 
 
 /**
@@ -161,6 +167,33 @@ public class LeadHooksNonTransient<T extends com.apiomat.nativemodule.salesmodul
     		  obj.throwException(e.getMessage());
     		}  
 
+
+    	String apiKeyR = (String) SalesModul.APP_CONFIG_PROXY.getConfigValue(SalesModul.APIKEYREST, r.getApplicationName(), r.getSystem() );
+    	List<com.gson.example.Station> stations = new ArrayList<com.gson.example.Station>();
+    	URL url;
+    	InputStreamReader reader;
+    	com.gson.example.Station station;
+		try {
+			url = new URL("https://creativecommons.tankerkoenig.de/json/list.php?lat=51.34&lng=12.37&rad=4&sort=price&type=e5&apikey=" + apiKeyR);
+	        reader = new InputStreamReader(url.openStream());
+	        stations.add(new Gson().fromJson(reader, Station.class));
+//	        station = new Gson().fromJson(reader, Station.class);
+//	        stations.add(station);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		double sum = 0.0;
+		for(int i = 0; i < stations.size();) {
+			sum += stations.get(i).getPrice();
+		}
+		double avgPrice = sum/stations.size();
+		objFromDB.setAverageAreaGasPrice(avgPrice);
+		objFromDB.save();
+		
+		
+        
     	if (null != obj.getScore() && obj.getScore() != objFromDB.getScore())
     	{
     		obj.throwException("score modification not allowed");
