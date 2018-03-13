@@ -23,6 +23,7 @@
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 package com.apiomat.nativemodule.salesmodul;
+import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -41,6 +42,7 @@ import org.apache.http.HttpStatus;
 import com.apiomat.nativemodule.*;
 import com.apiomat.nativemodule.basics.User;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.gson.example.Station;
 
 
@@ -168,21 +170,32 @@ public class LeadHooksNonTransient<T extends com.apiomat.nativemodule.salesmodul
     		}  
 
 
+    	
+//    	InputStreamReader reader;
+//    	com.gson.example.Station station;
+//		try {
+//			url = new URL("https://creativecommons.tankerkoenig.de/json/list.php?lat=51.34&lng=12.37&rad=4&sort=price&type=e5&apikey=" + apiKeyR);
+//	        reader = new InputStreamReader(url.openStream());
+//	        stations.add(new Gson().fromJson(reader, Station.class));
+//	        station = new Gson().fromJson(reader, Station.class);
+//	        stations.add(station);
+//		} catch (Exception e) {
+//			obj.throwException(e.getMessage());
+//		}
+    	
     	String apiKeyR = (String) SalesModul.APP_CONFIG_PROXY.getConfigValue(SalesModul.APIKEYREST, r.getApplicationName(), r.getSystem() );
     	List<com.gson.example.Station> stations = new ArrayList<com.gson.example.Station>();
     	URL url;
-    	InputStreamReader reader;
-    	com.gson.example.Station station;
+		Gson gson = new Gson();
+        BufferedReader br;
 		try {
 			url = new URL("https://creativecommons.tankerkoenig.de/json/list.php?lat=51.34&lng=12.37&rad=4&sort=price&type=e5&apikey=" + apiKeyR);
-	        reader = new InputStreamReader(url.openStream());
-	        stations.add(new Gson().fromJson(reader, Station.class));
-//	        station = new Gson().fromJson(reader, Station.class);
-//	        stations.add(station);
+			br = new BufferedReader (new InputStreamReader(url.openStream()));
+			stations = gson.fromJson(br, new TypeToken<List<com.gson.example.Station>>() {}.getType());
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			obj.throwException(e.getMessage());
 		}
+		
 		
 		double sum = 0.0;
 		for(int i = 0; i < stations.size();) {
