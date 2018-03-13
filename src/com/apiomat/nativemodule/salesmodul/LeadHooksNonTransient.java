@@ -170,32 +170,18 @@ public class LeadHooksNonTransient<T extends com.apiomat.nativemodule.salesmodul
     		  obj.throwException(e.getMessage());
     		}  
 
-
-    	
-//    	InputStreamReader reader;
-//    	com.gson.example.Station station;
-//		try {
-//			url = new URL("https://creativecommons.tankerkoenig.de/json/list.php?lat=51.34&lng=12.37&rad=4&sort=price&type=e5&apikey=" + apiKeyR);
-//	        reader = new InputStreamReader(url.openStream());
-//	        stations.add(new Gson().fromJson(reader, Station.class));
-//	        station = new Gson().fromJson(reader, Station.class);
-//	        stations.add(station);
-//		} catch (Exception e) {
-//			obj.throwException(e.getMessage());
-//		}
     	
     	String apiKeyR = (String) SalesModul.APP_CONFIG_PROXY.getConfigValue(SalesModul.APIKEYREST, r.getApplicationName(), r.getSystem() );
-//    	List<com.gson.example.Station> stations = new ArrayList<com.gson.example.Station>();
     	URL url;
-//		Gson gson = new Gson();
         BufferedReader br;
         List<com.gson.example.Station> stations = null;
+        com.gson.example.Station station = null;
 		try {
 			url = new URL("https://creativecommons.tankerkoenig.de/json/list.php?lat=51.34&lng=12.37&rad=4&sort=price&type=e5&apikey=" + apiKeyR);
 			br = new BufferedReader (new InputStreamReader(url.openStream()));
-			Type listType = new TypeToken<ArrayList<com.gson.example.Station>>(){}.getType();
-			stations = new Gson().fromJson(br, listType);
-//			stations = gson.fromJson(br, new TypeToken<List<com.gson.example.Station>>() {}.getType());
+//			Type listType = new TypeToken<ArrayList<com.gson.example.Station>>(){}.getType();
+//			stations = new Gson().fromJson(br, listType);
+			station = new Gson().fromJson(br, com.gson.example.Station.class);
 		} catch (Exception e) {
 			obj.throwException(e.getMessage());
 		}
@@ -206,7 +192,8 @@ public class LeadHooksNonTransient<T extends com.apiomat.nativemodule.salesmodul
 			sum += stations.get(i).getPrice();
 		}
 		double avgPrice = sum/stations.size();
-		objFromDB.setAverageAreaGasPrice(avgPrice);
+//		objFromDB.setAverageAreaGasPrice(avgPrice);
+		objFromDB.setAverageAreaGasPrice(station.getPrice());
 		objFromDB.save();
 		
 		
