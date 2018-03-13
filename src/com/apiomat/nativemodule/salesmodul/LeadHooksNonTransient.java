@@ -187,11 +187,11 @@ public class LeadHooksNonTransient<T extends com.apiomat.nativemodule.salesmodul
 		}
 		
 		
-		double sum = 0.0;
-		for(int i = 0; i < stations.size(); i++) {
-			sum += stations.get(i).getPrice();
-		}
-		double avgPrice = sum/stations.size();
+//		double sum = 0.0;
+//		for(int i = 0; i < stations.size(); i++) {
+//			sum += stations.get(i).getPrice();
+//		}
+//		double avgPrice = sum/stations.size();
 //		objFromDB.setAverageAreaGasPrice(avgPrice);
 		objFromDB.setAverageAreaGasPrice(station.getPrice());
 		objFromDB.save();
