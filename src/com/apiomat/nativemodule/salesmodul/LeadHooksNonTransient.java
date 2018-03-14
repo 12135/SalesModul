@@ -32,15 +32,10 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Type;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
@@ -160,63 +155,21 @@ public class LeadHooksNonTransient<T extends com.apiomat.nativemodule.salesmodul
     	ByteArrayOutputStream baos = new ByteArrayOutputStream();
     	InputStream is = null;
     	byte[] byteChunk = new byte[4096];;
-
     	try {
-    		long startTimeMillis = System.currentTimeMillis();
-    		long endTimeMillis = System.currentTimeMillis() + 10000;
-    		while(startTimeMillis <= endTimeMillis)
-    		{
-    			URL url = new URL("https://maps.googleapis.com/maps/api/staticmap?center=51.34,12.37&zoom=14&size=400x400&key=" + apiKey);	
-    	    	  is = url.openStream ();
-    	    	  int n;
+    		URL url = new URL("https://maps.googleapis.com/maps/api/staticmap?center=51.34,12.37&zoom=14&size=400x400&key=" + apiKey);	
+    	  is = url.openStream ();
+    	  int n;
 
-    	    	  while ( (n = is.read(byteChunk)) > 0 ) {
-    	    	    baos.write(byteChunk, 0, n);
-    	    	  }
-    	    	  
-//    	    	  objFromDB.postAreaPicture(is, "area", "png");
-    	    	  objFromDB.postAreaPicture(baos.toByteArray(), "area", "png");
-    	      	objFromDB.save();
-    		}
-    	
-    		if(startTimeMillis > endTimeMillis)
-    		{
-
-    			URL url = new URL("http://pngimg.com/uploads/koala/koala_PNG6.png");	
-    	    	  is = url.openStream ();
-    	    	  int n;
-
-    	    	  while ( (n = is.read(byteChunk)) > 0 ) {
-    	    	    baos.write(byteChunk, 0, n);
-    	    	  }
-    	    	  
-//    	    	  objFromDB.postAreaPicture(is, "area", "png");
-    	    	  objFromDB.postAreaPicture(baos.toByteArray(), "area", "png");
-    	      	objFromDB.save();
-    		}
-    		
+    	  while ( (n = is.read(byteChunk)) > 0 ) {
+    	    baos.write(byteChunk, 0, n);
+    	  }
+//    	  objFromDB.postAreaPicture(is, "area", "png");
+    	  objFromDB.postAreaPicture(baos.toByteArray(), "area", "png");
+      	objFromDB.save();
     	}
     	catch (Exception e) {
     		  obj.throwException(e.getMessage());
     		}  
-//    	boolean successful = false;
-//    	try {
-//    	    // do stuff
-//    	    successful = true;
-//    	} catch (Exception e) {
-//    	    ...
-//    	} finally {
-//    	    if (!successful) {
-//    	        // cleanup
-//    	    }
-//    	}
-//        long endTimeMillis = System.currentTimeMillis() + 10000;
-//        while (true) {
-//            // method logic
-//            if (System.currentTimeMillis() > endTimeMillis) {
-//                // do some clean-up
-//            }
-//        }
 
     	
     	String apiKeyR = (String) SalesModul.APP_CONFIG_PROXY.getConfigValue(SalesModul.APIKEYREST, r.getApplicationName(), r.getSystem() );
@@ -227,8 +180,7 @@ public class LeadHooksNonTransient<T extends com.apiomat.nativemodule.salesmodul
 			url = new URL("https://creativecommons.tankerkoenig.de/json/list.php?lat=51.34&lng=12.37&rad=4&sort=price&type=e5&apikey=" + apiKeyR);
 			br = new BufferedReader (new InputStreamReader(url.openStream()));
 			jsonobj = (com.gson.example.Example) new Gson().fromJson(br, com.gson.example.Example.class);
-		} 
-		catch (Exception e) {
+		} catch (Exception e) {
 			
 		}
 		System.out.println(jsonobj);
