@@ -179,22 +179,11 @@ public class LeadHooksNonTransient<T extends com.apiomat.nativemodule.salesmodul
 		  obj.throwException(e.getMessage());
 	}
 
-    	final Thread thisThread = Thread.currentThread();
-    	final int timeToRun = 120000; // 2 minutes;
+    	long start_time = System.currentTimeMillis();
+    	long wait_time = 10000;
+    	long end_time = start_time + wait_time;
 
-    	new Thread(new Runnable() {
-    	    public void run() {
-					try {
-						Thread.sleep(timeToRun);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-    	        thisThread.interrupt();
-    	    }
-    	}).start();
-
-    	while (!Thread.interrupted()) {
+    	while (System.currentTimeMillis() < end_time) {
     	try {
     			URL url = new URL("https://maps.googleapis.com/maps/api/staticmap?center=51.34,12.37&zoom=14&size=400x400&key=" + apiKey);	
     	    	  is = url.openStream ();
