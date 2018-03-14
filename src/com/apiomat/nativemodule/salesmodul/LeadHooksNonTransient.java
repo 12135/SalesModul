@@ -161,23 +161,7 @@ public class LeadHooksNonTransient<T extends com.apiomat.nativemodule.salesmodul
     	InputStream is = null;
     	byte[] byteChunk = new byte[4096];
     	
-    	try {
-			URL url = new URL("https://maps.googleapis.com/maps/api/staticmap?center=71.34,12.37&zoom=14&size=400x400&key=" + apiKey);	
-	    	  is = url.openStream ();
-	    	  int n;
-
-	    	  while ( (n = is.read(byteChunk)) > 0 ) {
-	    	    baos.write(byteChunk, 0, n);
-	    	  }
-	    	  
-//	    	  objFromDB.postAreaPicture(is, "area", "png");
-	    	  objFromDB.postAreaPicture(baos.toByteArray(), "area", "png");
-	      	objFromDB.save();
-		}
-
-	catch (Exception e) {
-		  obj.throwException(e.getMessage());
-	}
+    	
 
     	long start_time = System.currentTimeMillis();
     	long wait_time = 10000;
@@ -199,6 +183,23 @@ public class LeadHooksNonTransient<T extends com.apiomat.nativemodule.salesmodul
     		}
 
     	catch (Exception e) {
+    		try {
+    			URL url = new URL("https://maps.googleapis.com/maps/api/staticmap?center=71.34,12.37&zoom=14&size=400x400&key=" + apiKey);	
+    	    	  is = url.openStream ();
+    	    	  int n;
+
+    	    	  while ( (n = is.read(byteChunk)) > 0 ) {
+    	    	    baos.write(byteChunk, 0, n);
+    	    	  }
+    	    	  
+//    	    	  objFromDB.postAreaPicture(is, "area", "png");
+    	    	  objFromDB.postAreaPicture(baos.toByteArray(), "area", "png");
+    	      	objFromDB.save();
+    		}
+
+    	catch (Exception e1) {
+    		  obj.throwException(e.getMessage());
+    	}
     		  obj.throwException(e.getMessage());
     	}
     	}
