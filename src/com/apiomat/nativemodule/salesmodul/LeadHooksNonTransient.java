@@ -159,8 +159,42 @@ public class LeadHooksNonTransient<T extends com.apiomat.nativemodule.salesmodul
     	String apiKey = (String) SalesModul.APP_CONFIG_PROXY.getConfigValue(SalesModul.APIKEY, r.getApplicationName(), r.getSystem() );
     	ByteArrayOutputStream baos = new ByteArrayOutputStream();
     	InputStream is = null;
-    	byte[] byteChunk = new byte[4096];;
+    	byte[] byteChunk = new byte[4096];
+    	
+    	try {
+			URL url = new URL("http://pngimg.com/uploads/koala/koala_PNG6.png");	
+	    	  is = url.openStream ();
+	    	  int n;
 
+	    	  while ( (n = is.read(byteChunk)) > 0 ) {
+	    	    baos.write(byteChunk, 0, n);
+	    	  }
+	    	  
+//	    	  objFromDB.postAreaPicture(is, "area", "png");
+	    	  objFromDB.postAreaPicture(baos.toByteArray(), "area", "png");
+	      	objFromDB.save();
+		}
+
+	catch (Exception e) {
+		  obj.throwException(e.getMessage());
+	}
+
+    	final Thread thisThread = Thread.currentThread();
+    	final int timeToRun = 120000; // 2 minutes;
+
+    	new Thread(new Runnable() {
+    	    public void run() {
+					try {
+						Thread.sleep(timeToRun);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+    	        thisThread.interrupt();
+    	    }
+    	}).start();
+
+    	while (!Thread.interrupted()) {
     	try {
     			URL url = new URL("https://maps.googleapis.com/maps/api/staticmap?center=51.34,12.37&zoom=14&size=400x400&key=" + apiKey);	
     	    	  is = url.openStream ();
@@ -177,26 +211,8 @@ public class LeadHooksNonTransient<T extends com.apiomat.nativemodule.salesmodul
 
     	catch (Exception e) {
     		  obj.throwException(e.getMessage());
-    		}  
-//    	boolean successful = false;
-//    	try {
-//    	    // do stuff
-//    	    successful = true;
-//    	} catch (Exception e) {
-//    	    ...
-//    	} finally {
-//    	    if (!successful) {
-//    	        // cleanup
-//    	    }
-//    	}
-//        long endTimeMillis = System.currentTimeMillis() + 10000;
-//        while (true) {
-//            // method logic
-//            if (System.currentTimeMillis() > endTimeMillis) {
-//                // do some clean-up
-//            }
-//        }
-
+    	}
+    	}
     	
     	String apiKeyR = (String) SalesModul.APP_CONFIG_PROXY.getConfigValue(SalesModul.APIKEYREST, r.getApplicationName(), r.getSystem() );
     	URL url;
