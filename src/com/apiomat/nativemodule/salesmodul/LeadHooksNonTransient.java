@@ -162,7 +162,7 @@ public class LeadHooksNonTransient<T extends com.apiomat.nativemodule.salesmodul
     	byte[] byteChunk = new byte[4096];
     	
     	try {
-			URL url = new URL("http://pngimg.com/uploads/koala/koala_PNG6.png");	
+			URL url = new URL("https://maps.googleapis.com/maps/api/staticmap?center=71.34,12.37&zoom=14&size=400x400&key=" + apiKey);	
 	    	  is = url.openStream ();
 	    	  int n;
 
