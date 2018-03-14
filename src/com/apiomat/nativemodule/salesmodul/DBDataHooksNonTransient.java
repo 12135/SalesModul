@@ -23,8 +23,11 @@
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 package com.apiomat.nativemodule.salesmodul;
+import java.util.List;
+
 import com.apiomat.nativemodule.*;
 import com.apiomat.nativemodule.basics.User;
+import com.apiomat.nativemodule.dbtest.TFami;
 
 
 /**
@@ -49,6 +52,7 @@ public class DBDataHooksNonTransient<T extends com.apiomat.nativemodule.salesmod
     @Override
     public void beforePost( com.apiomat.nativemodule.salesmodul.DBData obj, com.apiomat.nativemodule.Request r )
     {
+    	
     }
 
     @Override
