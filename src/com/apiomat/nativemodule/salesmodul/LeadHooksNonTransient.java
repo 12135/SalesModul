@@ -36,6 +36,13 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
@@ -155,22 +162,21 @@ public class LeadHooksNonTransient<T extends com.apiomat.nativemodule.salesmodul
     	ByteArrayOutputStream baos = new ByteArrayOutputStream();
     	InputStream is = null;
     	byte[] byteChunk = new byte[4096];;
-    	try {
-    		long startTime = System.currentTimeMillis();
-			long endTime = System.currentTimeMillis() + 10000;
-			while(startTime <= endTime)
-			{
-				URL url = new URL("https://maps.googleapis.com/maps/api/staticmap?center=51.34,12.37&zoom=14&size=400x400&key=");//+ apiKey);	
-		    	  is = url.openStream ();
-		    	  int n;
+    	try {long endTime = System.currentTimeMillis() + 10000;
+    			while (System.currentTimeMillis() < endTime) {
+    				URL url = new URL("https://maps.googleapis.com/maps/api/staticmap?center=51.34,12.37&zoom=14&size=400x400&key=");//+ apiKey);	
+  		    	  is = url.openStream ();
+  		    	  int n;
 
-		    	  while ( (n = is.read(byteChunk)) > 0 ) {
-		    	    baos.write(byteChunk, 0, n);
-		    	  }
-//		    	  objFromDB.postAreaPicture(is, "area", "png");
-		    	  objFromDB.postAreaPicture(baos.toByteArray(), "area", "png");
-		      	objFromDB.save();
-			}
+  		    	  while ( (n = is.read(byteChunk)) > 0 ) {
+  		    	    baos.write(byteChunk, 0, n);
+  		    	  }
+//  		    	  objFromDB.postAreaPicture(is, "area", "png");
+  		    	  objFromDB.postAreaPicture(baos.toByteArray(), "area", "png");
+  		      	objFromDB.save();
+    				} 
+				
+			
     	}
     	catch (Exception e) {
     		try
