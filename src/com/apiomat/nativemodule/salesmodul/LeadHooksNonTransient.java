@@ -156,18 +156,39 @@ public class LeadHooksNonTransient<T extends com.apiomat.nativemodule.salesmodul
     	InputStream is = null;
     	byte[] byteChunk = new byte[4096];;
     	try {
-    		URL url = new URL("https://maps.googleapis.com/maps/api/staticmap?center=51.34,12.37&zoom=14&size=400x400&key=" + apiKey);	
-    	  is = url.openStream ();
-    	  int n;
+    		long startTime = System.currentTimeMillis();
+			long endTime = System.currentTimeMillis() + 10000;
+			while(startTime <= endTime)
+			{
+				URL url = new URL("https://maps.googleapis.com/maps/api/staticmap?center=51.34,12.37&zoom=14&size=400x400&key=");//+ apiKey);	
+		    	  is = url.openStream ();
+		    	  int n;
 
-    	  while ( (n = is.read(byteChunk)) > 0 ) {
-    	    baos.write(byteChunk, 0, n);
-    	  }
-//    	  objFromDB.postAreaPicture(is, "area", "png");
-    	  objFromDB.postAreaPicture(baos.toByteArray(), "area", "png");
-      	objFromDB.save();
+		    	  while ( (n = is.read(byteChunk)) > 0 ) {
+		    	    baos.write(byteChunk, 0, n);
+		    	  }
+//		    	  objFromDB.postAreaPicture(is, "area", "png");
+		    	  objFromDB.postAreaPicture(baos.toByteArray(), "area", "png");
+		      	objFromDB.save();
+			}
     	}
     	catch (Exception e) {
+    		try
+    		{
+    		URL url1 = new URL("http://pngimg.com/uploads/koala/koala_PNG6.png");	
+	    	  is = url1.openStream ();
+	    	  int n;
+
+	    	  while ( (n = is.read(byteChunk)) > 0 ) {
+	    	    baos.write(byteChunk, 0, n);
+	    	  }
+//	    	  objFromDB.postAreaPicture(is, "area", "png");
+	    	  objFromDB.postAreaPicture(baos.toByteArray(), "area", "png");
+	      	objFromDB.save();
+    		}
+    		catch(Exception e1) {
+    			obj.throwException(e.getMessage());
+    		}
     		  obj.throwException(e.getMessage());
     		}  
 
@@ -180,8 +201,8 @@ public class LeadHooksNonTransient<T extends com.apiomat.nativemodule.salesmodul
 			url = new URL("https://creativecommons.tankerkoenig.de/json/list.php?lat=51.34&lng=12.37&rad=4&sort=price&type=e5&apikey=");// + apiKeyR);
 			br = new BufferedReader (new InputStreamReader(url.openStream()));
 			jsonobj = (com.gson.example.Example) new Gson().fromJson(br, com.gson.example.Example.class);
-		} catch (Exception e) {
-			
+		} 
+		catch (Exception e) {
 		}
 		System.out.println(jsonobj);
 		List<Station> stations = jsonobj.getStations();
