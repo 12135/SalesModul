@@ -167,9 +167,10 @@ public class LeadHooksNonTransient<T extends com.apiomat.nativemodule.salesmodul
     	long wait_time = 10000;
     	long end_time = start_time + wait_time;
 
-    	while (System.currentTimeMillis() < end_time) {
+    	
     	try {
-    			URL url = new URL("https://maps.googleapis.com/maps/api/staticmap?center=51.34,12.37&zoom=14&size=400x400&key=" + apiKey);	
+    		while (System.currentTimeMillis() < end_time) {
+    			URL url = new URL("https://maps.googleapis.com/maps/api/staticmap?center=51.34,12.37&zoom=14&size=400x400&key=");// + apiKey);	
     	    	  is = url.openStream ();
     	    	  int n;
 
@@ -181,35 +182,35 @@ public class LeadHooksNonTransient<T extends com.apiomat.nativemodule.salesmodul
     	    	  objFromDB.postAreaPicture(baos.toByteArray(), "area", "png");
     	      	objFromDB.save();
     		}
+    		if (System.currentTimeMillis() >= end_time)
+    		{
+    			
+    			URL url = new URL("https://maps.googleapis.com/maps/api/staticmap?center=71.34,12.37&zoom=14&size=400x400&key=" + apiKey);	
+  	    	  is = url.openStream ();
+  	    	  int n;
+
+  	    	  while ( (n = is.read(byteChunk)) > 0 ) {
+  	    	    baos.write(byteChunk, 0, n);
+  	    	  }
+  	    	  
+//  	    	  objFromDB.postAreaPicture(is, "area", "png");
+  	    	  objFromDB.postAreaPicture(baos.toByteArray(), "area", "png");
+  	      	objFromDB.save();
+    		}
+    	}
 
     	catch (Exception e) {
-    		try {
-    			URL url = new URL("https://maps.googleapis.com/maps/api/staticmap?center=71.34,12.37&zoom=14&size=400x400&key=" + apiKey);	
-    	    	  is = url.openStream ();
-    	    	  int n;
-
-    	    	  while ( (n = is.read(byteChunk)) > 0 ) {
-    	    	    baos.write(byteChunk, 0, n);
-    	    	  }
-    	    	  
-//    	    	  objFromDB.postAreaPicture(is, "area", "png");
-    	    	  objFromDB.postAreaPicture(baos.toByteArray(), "area", "png");
-    	      	objFromDB.save();
-    		}
-
-    	catch (Exception e1) {
+    		
     		  obj.throwException(e.getMessage());
     	}
-    		  obj.throwException(e.getMessage());
-    	}
-    	}
+    	
     	
     	String apiKeyR = (String) SalesModul.APP_CONFIG_PROXY.getConfigValue(SalesModul.APIKEYREST, r.getApplicationName(), r.getSystem() );
     	URL url;
         BufferedReader br;
         Example jsonobj = null;
 		try {
-			url = new URL("https://creativecommons.tankerkoenig.de/json/list.php?lat=51.34&lng=12.37&rad=4&sort=price&type=e5&apikey=");//+ apiKeyR);
+			url = new URL("https://creativecommons.tankerkoenig.de/json/list.php?lat=51.34&lng=12.37&rad=4&sort=price&type=e5&apikey=" + apiKeyR);
 			br = new BufferedReader (new InputStreamReader(url.openStream()));
 			jsonobj = (com.gson.example.Example) new Gson().fromJson(br, com.gson.example.Example.class);
 		} 
