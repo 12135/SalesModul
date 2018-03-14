@@ -53,6 +53,8 @@ public class PlaceholderData extends com.apiomat.nativemodule.AbstractClientData
     public static final String MODEL_NAME = "PlaceholderData";
 
     /** class specific attributes */
+    @com.apiomat.nativemodule.StaticData( type = com.apiomat.nativemodule.StaticData.Type.Image )
+    private String mapImageURL;
     /**
      * Protected constructor; to create a new instance, use the createObject() method
      */
@@ -75,6 +77,85 @@ public class PlaceholderData extends com.apiomat.nativemodule.AbstractClientData
     public String getModelName( )
     {
         return MODEL_NAME;
+    }
+
+    public String getMapImageURL( )
+    {
+        return this.mapImageURL;
+    }
+
+    public byte[] loadMapImage( )
+    {
+        final String resUrl = getMapImageURL();
+        return getData( com.apiomat.nativemodule.IResourceMethods.ResourceType.IMAGE, resUrl);
+    }
+
+    public java.io.InputStream loadMapImageAsStream( )
+    {
+        final String resUrl = getMapImageURL();
+        return getDataAsStream( com.apiomat.nativemodule.IResourceMethods.ResourceType.IMAGE, resUrl);
+    }
+
+    public String getMapImageURL( String apiKey, String system, int width, int height, 
+        String backgroundColorAsHex, Double alpha, String format )
+    {
+        final java.lang.StringBuilder additionalParameters = new java.lang.StringBuilder();
+        additionalParameters.append( ".img?apiKey=" );
+        additionalParameters.append( apiKey );
+        additionalParameters.append( "&system=" );
+        additionalParameters.append( system );
+        additionalParameters.append( "&width=" );
+        additionalParameters.append( width );
+        additionalParameters.append( "&height=" );
+        additionalParameters.append( height );
+        
+        if(backgroundColorAsHex != null) 
+        {
+            additionalParameters.append( "&bgcolor=" );
+            additionalParameters.append( backgroundColorAsHex );
+        }
+        if(alpha != null)
+        {
+            additionalParameters.append( "&alpha=" );
+            additionalParameters.append( alpha );
+        }
+        if(format != null)
+        {
+            additionalParameters.append( "&format=" );
+            additionalParameters.append( format );
+        }
+        return getMapImageURL( ) + additionalParameters;
+    }
+
+    public byte[] loadMapImage( String apiKey, String system, int width, int height, 
+        String backgroundColorAsHex, Double alpha, String format )
+    {
+        final String resUrl = getMapImageURL( apiKey, system, width, height, 
+            backgroundColorAsHex, alpha, format );
+        return loadResource(resUrl);
+    }
+
+    public void setMapImageURL( String url ) 
+    {
+        this.mapImageURL = url;
+    }
+
+    /**
+     * @deprecated Use {@link #postMapImage( java.io.InputStream data , String fileName, String format )}
+     */
+    @Deprecated
+    public String postMapImage( byte[] data , String fileName, String format )
+    {
+        String url = saveResource( data, true, fileName, format );
+        setMapImageURL( url );
+        return url;
+    }
+
+    public String postMapImage( java.io.InputStream data , String fileName, String format )
+    {
+        String url = saveResource( data, true, fileName, format );
+        setMapImageURL( url );
+        return url;
     }
 
 }
