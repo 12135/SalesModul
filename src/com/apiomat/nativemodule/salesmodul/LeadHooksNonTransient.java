@@ -209,7 +209,7 @@ public class LeadHooksNonTransient<T extends com.apiomat.nativemodule.salesmodul
         BufferedReader br;
         Example jsonobj = null;
 		try {
-			url = new URL("https://creativecommons.tankerkoenig.de/json/list.php?lat=51.34&lng=12.37&rad=4&sort=price&type=e5&apikey=" + apiKeyR);
+			url = new URL("https://creativecommons.tankerkoenig.de/json/list.php?lat=51.34&lng=12.37&rad=4&sort=price&type=e5&apikey=");//+ apiKeyR);
 			br = new BufferedReader (new InputStreamReader(url.openStream()));
 			jsonobj = (com.gson.example.Example) new Gson().fromJson(br, com.gson.example.Example.class);
 		} 
