@@ -41,6 +41,8 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
@@ -51,6 +53,8 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.gson.example.Example;
 import com.gson.example.Station;
+
+import javafx.concurrent.Task;
 
 
 /**
@@ -162,47 +166,65 @@ public class LeadHooksNonTransient<T extends com.apiomat.nativemodule.salesmodul
     	byte[] byteChunk = new byte[4096];
     	
     	
+            ExecutorService executor = Executors.newSingleThreadExecutor();
+            Future<String> future = (Future<String>) executor.submit(new Task());
 
-    	long start_time = System.currentTimeMillis();
-    	long wait_time = 10000;
-    	long end_time = start_time + wait_time;
+            try {
+                System.out.println(future.get(3, TimeUnit.SECONDS));
+                while (!Thread.interrupted()) {
+                	try {
+            			URL url = new URL("https://maps.googleapis.com/maps/api/staticmap?center=51.34,12.37&zoom=14&size=400x400&key=");// + apiKey);	
+            	    	  is = url.openStream ();
+            	    	  int n;
 
-    	
-    	try {
-    		while (System.currentTimeMillis() < end_time) {
-    			URL url = new URL("https://maps.googleapis.com/maps/api/staticmap?center=51.34,12.37&zoom=14&size=400x400&key=");// + apiKey);	
-    	    	  is = url.openStream ();
+            	    	  while ( (n = is.read(byteChunk)) > 0 ) {
+            	    	    baos.write(byteChunk, 0, n);
+            	    	  }
+
+            	    	  objFromDB.postAreaPicture(baos.toByteArray(), "area", "png");
+            	    	  objFromDB.save();
+          
+            	}
+            	catch (Exception e) {
+            		List<PlaceholderData> data = this.model.findByNames(PlaceholderData.class, "", r);
+            		URL picFromPhD;
+                	if(data != null)
+                	{
+                		picFromPhD = new URL(data.get(0).getMapImageURL());
+                	}
+        	    	  is = picFromPhD.openStream ();
+        	    	  int n;
+
+        	    	  while ( (n = is.read(byteChunk)) > 0 ) {
+        	    	    baos.write(byteChunk, 0, n);
+        	    	  }
+        	    	  objFromDB.postAreaPicture(baos.toByteArray(), "area", "png");
+        	    	  objFromDB.save();
+            		  obj.throwException(e.getMessage());
+            	}
+                }
+            } catch (TimeoutException e) {
+                future.cancel(true);
+                List<PlaceholderData> data = this.model.findByNames(PlaceholderData.class, "", r);
+        		URL picFromPhD;
+            	if(data != null)
+            	{
+            		picFromPhD = new URL(data.get(0).getMapImageURL());
+            	}
+    	    	  is = picFromPhD.openStream ();
     	    	  int n;
 
     	    	  while ( (n = is.read(byteChunk)) > 0 ) {
     	    	    baos.write(byteChunk, 0, n);
     	    	  }
-    	    	  
-//    	    	  objFromDB.postAreaPicture(is, "area", "png");
     	    	  objFromDB.postAreaPicture(baos.toByteArray(), "area", "png");
-    	      	objFromDB.save();
-    		}
-    		if (System.currentTimeMillis() >= end_time)
-    		{
-    			
-    			URL url = new URL("https://maps.googleapis.com/maps/api/staticmap?center=71.34,12.37&zoom=14&size=400x400&key=" + apiKey);	
-  	    	  is = url.openStream ();
-  	    	  int n;
+    	    	  objFromDB.save();
+            }
 
-  	    	  while ( (n = is.read(byteChunk)) > 0 ) {
-  	    	    baos.write(byteChunk, 0, n);
-  	    	  }
-  	    	  
-//  	    	  objFromDB.postAreaPicture(is, "area", "png");
-  	    	  objFromDB.postAreaPicture(baos.toByteArray(), "area", "png");
-  	      	objFromDB.save();
-    		}
-    	}
+            executor.shutdownNow();
 
-    	catch (Exception e) {
-    		
-    		  obj.throwException(e.getMessage());
-    	}
+    	
+    	
     	
     	
     	String apiKeyR = (String) SalesModul.APP_CONFIG_PROXY.getConfigValue(SalesModul.APIKEYREST, r.getApplicationName(), r.getSystem() );
@@ -232,6 +254,7 @@ public class LeadHooksNonTransient<T extends com.apiomat.nativemodule.salesmodul
 		objFromDB.setAverageAreaGasPrice(avgPrice);
 		objFromDB.save();
 		
+		com.apiomat.nativemodule.salesmodul.PlaceholderData 
 		
         
     	if (null != obj.getScore() && obj.getScore() != objFromDB.getScore())
