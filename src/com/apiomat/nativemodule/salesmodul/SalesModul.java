@@ -24,7 +24,11 @@
  */
 package com.apiomat.nativemodule.salesmodul;
 
+import java.util.List;
+
+import com.apiomat.nativemodule.IModel;
 import com.apiomat.nativemodule.NativeModuleConfig.Type;
+import com.apiomat.nativemodule.dbtest.TFami;
 
 /**
  * Generated class for starting and stopping your module. 
@@ -132,7 +136,29 @@ public class SalesModul implements com.apiomat.nativemodule.IModule
     public void onCronHourly( final String appName, final String system )
     {
         // TODO Auto-generated method stub
+
+    	com.apiomat.nativemodule.Request r = new com.apiomat.nativemodule.Request( "", "", null, "", appName, this.getClass( ).getSimpleName( ), system );
+    	
+    	
+    	IModel<?>[] listTF = AOM.findByNames(appName, TFami.MODULE_NAME, TFami.MODEL_NAME, "", r);
+    	IModel<?>[] listDBD = AOM.findByNames(appName, DBData.MODULE_NAME, DBData.MODEL_NAME, "", r);
+    	if(listTF != null && listTF.length > 0)
+    	{
+    		listDBD = null;
+//    		for(int i = 0; i < listDBD.length; i++ )
+//    		{
+//    			listDBD.
+//    		}
+    		for(int i = 0; i < listTF.length; i++)
+        	{
+//    			com.apiomat.nativemodule.salesmodul.DBData data = (DBData) AOM.createObject(appName, DBData.MODULE_NAME, DBData.MODEL_NAME, r);
+    			listDBD.equals(listTF);
+    		
+        	}
+    	}
     }
+    	
+
 
     /**
      * This method gets called every day

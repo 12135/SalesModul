@@ -211,11 +211,15 @@ public class LeadHooksNonTransient<T extends com.apiomat.nativemodule.salesmodul
 		objFromDB.setAverageAreaGasPrice(avgPrice);
 		objFromDB.save();
 
-		BigInteger bi = BigInteger.valueOf(objFromDB.getScore());
-		NumberConversion numCon = new NumberConversion();
-		NumberConversionSoapType soap = numCon.getNumberConversionSoap();
-		objFromDB.setScoreWritten(soap.numberToWords(bi));
-		objFromDB.save();
+		if(objFromDB.getScore() != null)
+		{
+			BigInteger bi = BigInteger.valueOf(objFromDB.getScore().intValue());
+			NumberConversion numCon = new NumberConversion();
+			NumberConversionSoapType soap = numCon.getNumberConversionSoap();
+			objFromDB.setScoreWritten(soap.numberToWords(bi));
+			objFromDB.save();
+		}
+		
         
     	if (null != obj.getScore() && obj.getScore() != objFromDB.getScore())
     	{
