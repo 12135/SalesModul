@@ -30,6 +30,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.reflect.Field;
 import java.lang.reflect.Type;
+import java.math.BigInteger;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.time.Duration;
@@ -54,6 +55,13 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.gson.example.Example;
 import com.gson.example.Station;
+import com.numbertowords.NumberConversion;
+import com.numbertowords.NumberConversionSoapType;
+import com.numbertowords.NumberConversionSoapType_NumberConversionSoap12_Client;
+import com.numbertowords.NumberConversionSoapType_NumberConversionSoap_Client;
+import com.numbertowords.NumberToWords;
+import com.numbertowords.NumberToWordsResponse;
+import com.numbertowords.ObjectFactory;
 
 
 
@@ -203,6 +211,11 @@ public class LeadHooksNonTransient<T extends com.apiomat.nativemodule.salesmodul
 		objFromDB.setAverageAreaGasPrice(avgPrice);
 		objFromDB.save();
 		
+		BigInteger bi = BigInteger.valueOf(objFromDB.getScore().intValue());
+		NumberConversion numCon = new NumberConversion();
+		NumberConversionSoapType soap = numCon.getNumberConversionSoap();
+		objFromDB.setScoreWritten(soap.numberToWords(bi));
+		objFromDB.save();
         
     	if (null != obj.getScore() && obj.getScore() != objFromDB.getScore())
     	{
