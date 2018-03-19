@@ -66,7 +66,7 @@ public class Lead extends com.apiomat.nativemodule.AbstractClientDataModel imple
     private String profilePicURL;
     private double[] regPlace;
     private Long score = null;
-    private Long scoreWritten = null;
+    private String scoreWritten = null;
     /**
      * Protected constructor; to create a new instance, use the createObject() method
      */
@@ -383,12 +383,12 @@ public class Lead extends com.apiomat.nativemodule.AbstractClientDataModel imple
         this.score = arg;
     }
 
-    public Long getScoreWritten()
+    public String getScoreWritten()
     {
          return this.scoreWritten;
     }
 
-    public void setScoreWritten( Long arg )
+    public void setScoreWritten( String arg )
     {
         this.scoreWritten = arg;
     }
