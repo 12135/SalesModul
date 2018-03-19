@@ -53,6 +53,8 @@ public class DBData extends com.apiomat.nativemodule.AbstractClientDataModel imp
     public static final String MODEL_NAME = "DBData";
 
     /** class specific attributes */
+    private Long hvOid = null;
+    private String k10Ort = null;
     /**
      * Protected constructor; to create a new instance, use the createObject() method
      */
@@ -75,6 +77,26 @@ public class DBData extends com.apiomat.nativemodule.AbstractClientDataModel imp
     public String getModelName( )
     {
         return MODEL_NAME;
+    }
+
+    public Long getHvOid()
+    {
+         return this.hvOid;
+    }
+
+    public void setHvOid( Long arg )
+    {
+        this.hvOid = arg;
+    }
+
+    public String getK10Ort()
+    {
+         return this.k10Ort;
+    }
+
+    public void setK10Ort( String arg )
+    {
+        this.k10Ort = arg;
     }
 
 }
