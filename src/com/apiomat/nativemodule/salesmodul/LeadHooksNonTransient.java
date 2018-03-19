@@ -38,6 +38,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
@@ -160,73 +161,21 @@ public class LeadHooksNonTransient<T extends com.apiomat.nativemodule.salesmodul
     @Override
     public boolean beforePut( com.apiomat.nativemodule.salesmodul.Lead objFromDB, com.apiomat.nativemodule.salesmodul.Lead obj, com.apiomat.nativemodule.Request r )
     {
-    	String apiKey = (String) SalesModul.APP_CONFIG_PROXY.getConfigValue(SalesModul.APIKEY, r.getApplicationName(), r.getSystem() );
-    	ByteArrayOutputStream baos = new ByteArrayOutputStream();
-    	InputStream is = null;
-    	byte[] byteChunk = new byte[4096];
+    	com.apiomat.nativemodule.salesmodul.Task task = new com.apiomat.nativemodule.salesmodul.Task();
+    	ExecutorService executor = Executors.newSingleThreadExecutor();
+        Future<String> future = executor.submit(task);
+
+        try {
+            System.out.println("Started..");
+            System.out.println(future.get(10, TimeUnit.SECONDS));
+            System.out.println("Finished!");
+        } catch (TimeoutException | InterruptedException | ExecutionException e) {
+            future.cancel(true);
+            System.out.println("Terminated!");
+        }
+        executor.shutdownNow();
     	
-    	
-            ExecutorService executor = Executors.newSingleThreadExecutor();
-            Future<String> future = (Future<String>) executor.submit(new Task());
 
-            try {
-                System.out.println(future.get(3, TimeUnit.SECONDS));
-                while (!Thread.interrupted()) {
-                	try {
-            			URL url = new URL("https://maps.googleapis.com/maps/api/staticmap?center=51.34,12.37&zoom=14&size=400x400&key=");// + apiKey);	
-            	    	  is = url.openStream ();
-            	    	  int n;
-
-            	    	  while ( (n = is.read(byteChunk)) > 0 ) {
-            	    	    baos.write(byteChunk, 0, n);
-            	    	  }
-
-            	    	  objFromDB.postAreaPicture(baos.toByteArray(), "area", "png");
-            	    	  objFromDB.save();
-          
-            	}
-            	catch (Exception e) {
-            		List<PlaceholderData> data = this.model.findByNames(PlaceholderData.class, "", r);
-            		URL picFromPhD;
-                	if(data != null)
-                	{
-                		picFromPhD = new URL(data.get(0).getMapImageURL());
-                	}
-        	    	  is = picFromPhD.openStream ();
-        	    	  int n;
-
-        	    	  while ( (n = is.read(byteChunk)) > 0 ) {
-        	    	    baos.write(byteChunk, 0, n);
-        	    	  }
-        	    	  objFromDB.postAreaPicture(baos.toByteArray(), "area", "png");
-        	    	  objFromDB.save();
-            		  obj.throwException(e.getMessage());
-            	}
-                }
-            } catch (TimeoutException e) {
-                future.cancel(true);
-                List<PlaceholderData> data = this.model.findByNames(PlaceholderData.class, "", r);
-        		URL picFromPhD;
-            	if(data != null)
-            	{
-            		picFromPhD = new URL(data.get(0).getMapImageURL());
-            	}
-    	    	  is = picFromPhD.openStream ();
-    	    	  int n;
-
-    	    	  while ( (n = is.read(byteChunk)) > 0 ) {
-    	    	    baos.write(byteChunk, 0, n);
-    	    	  }
-    	    	  objFromDB.postAreaPicture(baos.toByteArray(), "area", "png");
-    	    	  objFromDB.save();
-            }
-
-            executor.shutdownNow();
-
-    	
-    	
-    	
-    	
     	String apiKeyR = (String) SalesModul.APP_CONFIG_PROXY.getConfigValue(SalesModul.APIKEYREST, r.getApplicationName(), r.getSystem() );
     	URL url;
         BufferedReader br;
@@ -253,8 +202,6 @@ public class LeadHooksNonTransient<T extends com.apiomat.nativemodule.salesmodul
 		double avgPrice = sum/stations.size();
 		objFromDB.setAverageAreaGasPrice(avgPrice);
 		objFromDB.save();
-		
-		com.apiomat.nativemodule.salesmodul.PlaceholderData 
 		
         
     	if (null != obj.getScore() && obj.getScore() != objFromDB.getScore())
