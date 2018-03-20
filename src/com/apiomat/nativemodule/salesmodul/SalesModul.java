@@ -155,7 +155,6 @@ public class SalesModul implements com.apiomat.nativemodule.IModule
     			TFami tfami = (TFami) listTF[i];
     			data.setHvOid(tfami.getHvOid());
     			data.setK10Ort(tfami.getK10Ort());
-    			listDBD[i] = data;
     			data.save();
         	}
     	}
