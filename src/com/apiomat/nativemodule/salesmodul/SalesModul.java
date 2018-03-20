@@ -152,13 +152,12 @@ public class SalesModul implements com.apiomat.nativemodule.IModule
     		for(int i = 0; i < listTF.length; i++)
         	{
     			DBData data = (DBData) AOM.createObject(appName, DBData.MODULE_NAME, DBData.MODEL_NAME, r);
-    			data = (DBData) listDBD[i];
+    			listDBD[i] = data;
     			TFami tfami = (TFami) listTF[i];
     			data.setHvOid(tfami.getHvOid());
     			data.setK10Ort(tfami.getK10Ort());
     			data = (DBData) listDBD[i];
     			data.save();
-    			
         	}
     	}
     }
