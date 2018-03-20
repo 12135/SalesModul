@@ -151,6 +151,7 @@ public class SalesModul implements com.apiomat.nativemodule.IModule
     			DBData obj = (DBData) listDBD[i];
     			obj.delete();
     		}
+    		AOM.log(appName, String.format("listTF.length: %d", listTF.length), false);
     		for(int i = 0; i < listTF.length; i++)
         	{
     			AOM.log(appName, "creating cache object", false);
