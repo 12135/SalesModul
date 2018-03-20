@@ -24,6 +24,7 @@
  */
 package com.apiomat.nativemodule.salesmodul;
 
+import java.util.Arrays;
 import java.util.List;
 
 import com.apiomat.nativemodule.IModel;
@@ -152,15 +153,22 @@ public class SalesModul implements com.apiomat.nativemodule.IModule
     			obj.delete();
     		}
     		AOM.log(appName, String.format("listTF.length: %d", listTF.length), false);
-    		for(int i = 0; i < listTF.length; i++)
-        	{
-    			AOM.log(appName, "creating cache object", false);
-    			DBData data = (DBData) AOM.createObject(appName, DBData.MODULE_NAME, DBData.MODEL_NAME, r);
-    			TFami tfami = (TFami) listTF[i];
-    			data.setHvOid(tfami.getHvOid());
-    			data.setK10Ort(tfami.getK10Ort());
-    			data.save();
-        	}
+//    		for(int i = 0; i < listTF.length; i++)
+//        	{
+//    			AOM.log(appName, "creating cache object", false);
+//    			DBData data = (DBData) AOM.createObject(appName, DBData.MODULE_NAME, DBData.MODEL_NAME, r);
+//    			TFami tfami = (TFami) listTF[i];
+//    			data.setHvOid(tfami.getHvOid());
+//    			data.setK10Ort(tfami.getK10Ort());
+//    			data.save();
+//        	}
+    		Arrays.asList( listTF).stream().forEach(t -> {
+    			TFami entry = (TFami) t;
+    			DBData cacheEntry = (DBData) AOM.createObject(appName, DBData.MODULE_NAME, DBData.MODEL_NAME, r);
+    			cacheEntry.setHvOid(entry.getHvOid());
+    			cacheEntry.setK10Ort(entry.getK10Ort());
+    			cacheEntry.save();
+    		});
     	}
     }
     	
