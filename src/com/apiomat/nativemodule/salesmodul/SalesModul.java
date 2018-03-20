@@ -138,19 +138,22 @@ public class SalesModul implements com.apiomat.nativemodule.IModule
         // TODO Auto-generated method stub
 
     	com.apiomat.nativemodule.Request r = new com.apiomat.nativemodule.Request( "", "", null, "", appName, this.getClass( ).getSimpleName( ), system );
-    	
+    	r.setNoAuth(true);
     	
     	IModel<?>[] listTF = AOM.findByNames(appName, TFami.MODULE_NAME, TFami.MODEL_NAME, "", r);
     	IModel<?>[] listDBD = AOM.findByNames(appName, DBData.MODULE_NAME, DBData.MODEL_NAME, "", r);
     	if(listTF != null && listTF.length > 0)
     	{
+    		AOM.log(appName, "deleting old cache", false);
     		for(int i = 0; i < listDBD.length; i++ )
     		{
+    			AOM.log(appName, "deleting cache object", false);
     			DBData obj = (DBData) listDBD[i];
     			obj.delete();
     		}
     		for(int i = 0; i < listTF.length; i++)
         	{
+    			AOM.log(appName, "creating cache object", false);
     			DBData data = (DBData) AOM.createObject(appName, DBData.MODULE_NAME, DBData.MODEL_NAME, r);
     			TFami tfami = (TFami) listTF[i];
     			data.setHvOid(tfami.getHvOid());
