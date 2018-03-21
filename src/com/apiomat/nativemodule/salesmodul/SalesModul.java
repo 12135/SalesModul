@@ -156,7 +156,8 @@ public class SalesModul implements com.apiomat.nativemodule.IModule
     		for(int i = 0; i < listTF.length; i++)
         	{
     			AOM.log(appName, "creating cache object", false);
-//    			DBData data = (DBData) AOM.createObject(appName, DBData.MODULE_NAME, DBData.MODEL_NAME, r);
+    			DBData data = (DBData) AOM.createObject(appName, DBData.MODULE_NAME, DBData.MODEL_NAME, r);
+    			AOM.log(appName, "created: " + data.getId(), false);
 //    			TFami tfami = (TFami) listTF[i];
 //    			data.setHvOid(tfami.getHvOid());
 //    			data.setK10Ort(tfami.getK10Ort());
