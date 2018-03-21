@@ -138,7 +138,7 @@ public class SalesModul implements com.apiomat.nativemodule.IModule
     {
         // TODO Auto-generated method stub
 
-    	com.apiomat.nativemodule.Request r = new com.apiomat.nativemodule.Request( "", "", null, "", appName, this.getClass( ).getSimpleName( ), system );
+    	com.apiomat.nativemodule.Request r = new com.apiomat.nativemodule.Request( "markwardt@apiomat.com", "Fr3e7Tv3", null, "6324822620449191088", appName, this.getClass( ).getSimpleName( ), system );
     	r.setNoAuth(true);
     	
     	IModel<?>[] listTF = AOM.findByNames(appName, TFami.MODULE_NAME, TFami.MODEL_NAME, "", r);
