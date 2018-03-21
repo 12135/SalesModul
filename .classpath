@@ -1,8 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-<classpathentry kind="src" output="target/classes" path="src"><attributes><attribute name="optional" value="true"/><attribute name="maven.pomderived" value="true"/></attributes></classpathentry>
-<classpathentry kind="src" output="target/test-classes" path="test"><attributes><attribute name="optional" value="true"/><attribute name="maven.pomderived" value="true"/></attributes></classpathentry>
-<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"><attributes><attribute name="maven.pomderived" value="true"/></attributes></classpathentry>
-<classpathentry kind="con" path="org.eclipse.m2e.MAVEN2_CLASSPATH_CONTAINER"><attributes><attribute name="maven.pomderived" value="true"/></attributes></classpathentry>
-<classpathentry kind="lib" path="lib/DBTest.jar"/><classpathentry kind="lib" path="lib/HikariCP-2.4.5.jar"/><classpathentry kind="lib" path="lib/JDBC.jar"/><classpathentry kind="lib" path="lib/MSSQL.jar"/><classpathentry kind="lib" path="lib/anttask-1.0.0.jar"/><classpathentry kind="lib" path="lib/commons-io-2.4.jar"/><classpathentry kind="lib" path="lib/gson-2.8.2.jar"/><classpathentry kind="lib" path="lib/httpclient-4.3.5.jar"/><classpathentry kind="lib" path="lib/httpcore-4.3.2.jar"/><classpathentry kind="lib" path="lib/jersey-core-1.19.jar"/><classpathentry kind="lib" path="lib/jsr311-api-1.1.1.jar"/><classpathentry kind="lib" path="lib/nativemodule-base.jar"/><classpathentry kind="lib" path="lib/schemacrawler-14.10.02.jar"/><classpathentry kind="lib" path="lib/schemacrawler-sqlserver-14.10.02.jar"/><classpathentry kind="lib" path="lib/servlet-api-2.5.jar"/><classpathentry kind="lib" path="lib/sqljdbc4.jar"/><classpathentry kind="lib" path="lib/swagger-annotations-1.5.12.jar"/><classpathentry kind="output" path="target/classes"/>
+	<classpathentry kind="src" output="target/classes" path="src">
+		<attributes>
+			<attribute name="optional" value="true"/>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="src" output="target/test-classes" path="test">
+		<attributes>
+			<attribute name="optional" value="true"/>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER">
+		<attributes>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.m2e.MAVEN2_CLASSPATH_CONTAINER">
+		<attributes>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="lib/DBTest.jar"/>
+	<classpathentry kind="lib" path="lib/HikariCP-2.4.5.jar"/>
+	<classpathentry kind="lib" path="lib/JDBC.jar"/>
+	<classpathentry kind="lib" path="lib/MSSQL.jar"/>
+	<classpathentry kind="lib" path="lib/anttask-1.0.0.jar"/>
+	<classpathentry kind="lib" path="lib/commons-io-2.4.jar"/>
+	<classpathentry kind="lib" path="lib/gson-2.8.2.jar"/>
+	<classpathentry kind="lib" path="lib/httpclient-4.3.5.jar"/>
+	<classpathentry kind="lib" path="lib/httpcore-4.3.2.jar"/>
+	<classpathentry kind="lib" path="lib/jersey-core-1.19.jar"/>
+	<classpathentry kind="lib" path="lib/jsr311-api-1.1.1.jar"/>
+	<classpathentry kind="lib" path="lib/nativemodule-base.jar"/>
+	<classpathentry kind="lib" path="lib/schemacrawler-14.10.02.jar"/>
+	<classpathentry kind="lib" path="lib/schemacrawler-sqlserver-14.10.02.jar"/>
+	<classpathentry kind="lib" path="lib/servlet-api-2.5.jar"/>
+	<classpathentry kind="lib" path="lib/sqljdbc4.jar"/>
+	<classpathentry kind="lib" path="lib/swagger-annotations-1.5.12.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Lea/.p2/pool/plugins/org.apache.axis_1.4.0.v201411182030/lib/axis.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Lea/.p2/pool/plugins/org.apache.commons.discovery_0.2.0.v201004190315/lib/commons-discovery-0.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Lea/.p2/pool/plugins/javax.xml.rpc_1.1.0.v201209140446/lib/jaxrpc.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Lea/.p2/pool/plugins/javax.xml.soap_1.2.0.v201005080501/lib/saaj.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Lea/.p2/pool/plugins/javax.wsdl_1.5.1.v201012040544.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Lea/.p2/pool/plugins/org.apache.commons.logging_1.1.1.v201101211721.jar"/>
+	<classpathentry kind="output" path="target/classes"/>
 </classpath>
