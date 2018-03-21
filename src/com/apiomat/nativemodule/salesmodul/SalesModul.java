@@ -156,11 +156,11 @@ public class SalesModul implements com.apiomat.nativemodule.IModule
     		for(int i = 0; i < listTF.length; i++)
         	{
     			AOM.log(appName, "creating cache object", false);
-    			DBData data = (DBData) AOM.createObject(appName, DBData.MODULE_NAME, DBData.MODEL_NAME, r);
-    			TFami tfami = (TFami) listTF[i];
-    			data.setHvOid(tfami.getHvOid());
-    			data.setK10Ort(tfami.getK10Ort());
-    			data.save();
+//    			DBData data = (DBData) AOM.createObject(appName, DBData.MODULE_NAME, DBData.MODEL_NAME, r);
+//    			TFami tfami = (TFami) listTF[i];
+//    			data.setHvOid(tfami.getHvOid());
+//    			data.setK10Ort(tfami.getK10Ort());
+//    			data.save();
         	}
 //    		Arrays.asList( listTF).stream().forEach(t -> {
 //    			TFami entry = (TFami) t;
