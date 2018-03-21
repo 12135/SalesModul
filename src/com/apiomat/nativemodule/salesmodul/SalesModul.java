@@ -138,7 +138,7 @@ public class SalesModul implements com.apiomat.nativemodule.IModule
     {
         // TODO Auto-generated method stub
 
-    	com.apiomat.nativemodule.Request r = new com.apiomat.nativemodule.Request( "markwardt@apiomat.com", "Fr3e7Tv3", null, "6324822620449191088", appName, this.getClass( ).getSimpleName( ), system );
+    	com.apiomat.nativemodule.Request r = new com.apiomat.nativemodule.Request( "", "", null, "", appName, this.getClass( ).getSimpleName( ), system );
     	r.setNoAuth(true);
     	
     	IModel<?>[] listTF = AOM.findByNames(appName, TFami.MODULE_NAME, TFami.MODEL_NAME, "", r);
@@ -157,11 +157,10 @@ public class SalesModul implements com.apiomat.nativemodule.IModule
         	{
     			AOM.log(appName, "creating cache object", false);
     			DBData data = (DBData) AOM.createObject(appName, DBData.MODULE_NAME, DBData.MODEL_NAME, r);
-    			/*
-    			TFami tfami = (TFami) listTF[i];
-    			data.setHvOid(tfami.getHvOid());
-    			data.setK10Ort(tfami.getK10Ort());
-    			*/
+    			
+//    			TFami tfami = (TFami) listTF[i];
+//    			data.setHvOid(tfami.getHvOid());
+//    			data.setK10Ort(tfami.getK10Ort());
     			data.save();
     			AOM.log(appName, "created: " + data.getId(), false);
         	}
