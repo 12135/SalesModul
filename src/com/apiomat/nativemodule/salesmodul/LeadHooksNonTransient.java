@@ -48,10 +48,18 @@ import java.util.concurrent.TimeoutException;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.ContentType;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.json.JSONObject;
 
 import com.apiomat.nativemodule.*;
 import com.apiomat.nativemodule.basics.User;
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import com.gson.example.Example;
 import com.gson.example.Station;
@@ -62,6 +70,8 @@ import com.numbertowords.NumberConversionSoapType_NumberConversionSoap_Client;
 import com.numbertowords.NumberToWords;
 import com.numbertowords.NumberToWordsResponse;
 import com.numbertowords.ObjectFactory;
+
+import sun.net.www.http.HttpClient;
 
 
 
@@ -226,8 +236,32 @@ public class LeadHooksNonTransient<T extends com.apiomat.nativemodule.salesmodul
     		obj.throwException("score modification not allowed");
     	}
         return false;
+        
+//        CloseableHttpClient client = HttpClients.createDefault();
+//        String apiKey = r.getApiKey();
+//        URL myURL = new URL("localhost:8000/yambas/rest/modules");
+//        HttpPost httpPost = new HttpPost(myURL);
+//     
+//        JSONObject json;
+//        String moduleName = "test1";
+//        String customerName = r.getAccountName();
+//        json.append("customerName", customerName);
+//        json.append("moduleName", moduleName);
+//
+//        StringEntity entity = new StringEntity(json.toString());
+//        httpPost.setEntity(entity);
+//        httpPost.addHeader("Accept", "application/json");
+//        httpPost.addHeader("Content-Type", "application/x-www-form-urlencoded");
+//        httpPost.addHeader("X-apiomat-system", r.getSystem());
+//        httpPost.addHeader("X-apiomat-sdkVersion", "2.6.3"); 
+//        httpPost.addHeader("X-apiomat-apikey", r.getApiKey());
+//        httpPost.addHeader("Authorization", "Basic bWFya3dhcmR0QGFwaW9tYXQuY29tOkZyM2U3VHYz");
+//        
+//        CloseableHttpResponse response = client.execute(httpPost);
+//        //assertThat(response.getStatusLine().getStatusCode(), equalTo(200));
+//        System.out.println(response.getStatusLine().getStatusCode());
+//        client.close();
     }
-
     @Override
     public void afterPut( com.apiomat.nativemodule.salesmodul.Lead obj, com.apiomat.nativemodule.Request r )
     {
